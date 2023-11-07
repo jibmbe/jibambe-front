@@ -1,0 +1,96 @@
+import React, {useState} from 'react';
+
+function Upload(){
+
+    const [userdata, setUserData] = useState({
+        place: '',
+        place: '',
+        timelength: '',
+        pleasantness: '',
+        type: ''
+    });
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        console.log(userdata)
+        fetch('https://jibambey.vercel.app/upload', {
+            method: 'POST',
+            headers: {
+                'Content-Type' : 'application/json',
+                'Authorization': `Token ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify(userdata)
+        }).then(
+            alert('Thank you for your feedback')
+        ).then(
+            window.location.reload()
+        ).catch(
+            err => console.log(err)
+        )
+    };
+
+    return (
+        <div className='login-container'>
+            <form onSubmit={handleSubmit}>
+                <div className='input-field'>
+                        <input 
+                            type='text' required
+                            value={userdata.place}
+                            onChange={(e) => setUserData(prevState => ({
+                                ...prevState, place: e.target.value
+                            }))}
+                        />
+                        <span></span>
+                        <label>Place</label>
+                    </div>
+                    <div className='input-field'>
+                        <input 
+                            type='number' required
+                            value={userdata.noiselevel}
+                            onChange={(e) => setUserData(prevState => ({
+                                ...prevState, noiselevel: e.target.value
+                            }))}
+                        />
+                        <span></span>
+                        <label>Noise level</label>
+                    </div>
+                    <div className='input-field'>
+                        <input 
+                            type='text' required
+                            value={userdata.timelength}
+                            onChange={(e) => setUserData(prevState => ({
+                                ...prevState, timelength: e.target.value
+                            }))}
+                        />
+                        <span></span>
+                        <label>Time length</label>
+                    </div>
+                    <div className='input-field'>
+                        <input 
+                            type='text' required
+                            value={userdata.pleasantness}
+                            onChange={(e) => setUserData(prevState => ({
+                                ...prevState, pleasantness: e.target.value
+                            }))}
+                        />
+                        <span></span>
+                        <label>Pleasantness</label>
+                    </div>
+                    <div className='input-field'>
+                        <input 
+                            type='text' required
+                            value={userdata.noise_type}
+                            onChange={(e) => setUserData(prevState => ({
+                                ...prevState, noise_type: e.target.value
+                            }))}
+                        />
+                        <span></span>
+                        <label>Place</label>
+                    </div>
+                <input type='submit' value='Upload Data' style={{marginBottom: '20px'}}/>
+            </form> 
+        </div>
+    )
+}
+
+export default Upload;
